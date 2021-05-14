@@ -1,0 +1,74 @@
+#Implement scanner for the provided lexical definitions.#
+
+*I Have chosen option 3*
+```
+Locations:
+FSA Table Location: scanner.h 
+Driver Location: scanner.cpp Line 198: int Scanner::scan(int currentLine, string &input, Token &tk)
+
+FSA TABLE
+/* Visual representation of the FSA table: ROWS: 4 | COLUMNS: 6
+                -------------------------------------------------------------------------
+                | letter    | digit     | ws        | EOF       | operator  | other     |
+                -------------------------------------------------------------------------
+                | STATE_2   | STATE_3   | STATE_0   | STATE_EOF | STATE_1   | ERROR_UNK | s0 (initial)
+                -------------------------------------------------------------------------
+                | STATE_OP  | STATE_OP  | STATE_OP  | STATE_OP  | STATE_OP  | ERROR_UNK | s1 (operator)
+                -------------------------------------------------------------------------
+                | STATE_2   | STATE_2   | STATE_ID  | STATE_ID  | STATE_ID  | ERROR_UNK | s2 (identifier)
+                -------------------------------------------------------------------------
+                | ERROR_INT | STATE_3   | STATE_INT | STATE_INT | STATE_INT | ERROR_UNK | s3 (integer)
+                -------------------------------------------------------------------------
+*/
+
+
+
+```
+The scanner is embedded and thus it will return one token every time it is called. Since the parser is not available yet, we will use a tester program to call the scanner.
+
+The scanner could be implemented as
+```
+Plain string reader - read strings separated by spaces - (70 points) assuming
+all tokens must be separated by spaces
++5 for counting lines
+As above but tokens dont have to be separated by WS (80 points)
++5 for counting lines
+FSA table + driver (100 points)
+```
+You must have the README.txt file with your submission stating on the first line which option you are using: 1, 2, or 3, and if 3 then include information where the FSA table is and which function is the driver. If this information is missing, the project will be graded under option 1
+Implement a token as a triplet {tokenID, tokenInstance, line#} (or pair if no processing line numbers)
+Dont forget EOFtk token at the end
+Implement the scanner in a separate file with basename "scanner"
+For testing purposes, the scanner will be tested using a testing driver implemented in the the same scanner file or in a file with basename "testScanner". You need to implement your own tester and include as a part of the project. This tester will ask the scanner for one token at a time and display the token to the screen, one per line, including information (descriptive) on what token class, what token instance, and what line, if applicable.
+This is just 
+while token (token=scanner() != eofTk())
+  print descriptive token  followed by token instance or nothing if no instance followed by line number if processing followed by \n
+Invocation:
+    scanner [file]
+to read from stdin or file file.fs (the extension is implicit)
+Arguments are the same as P0
+Wrong invocations may not be graded
+Dont confuse executable name with file name with function name
+Grading rubric
+10 points for architecture/style regardless of implementation method
+5 points for stdin
+10 points for handling invocation and execution errors
+remaining points for properly recognizing/displaying tokens
+You must have the following: (C++ or Java handle similarly) 
+types including token type in token.h
+implement scanner in scanner.c and scanner.h
+implement the tester in another file testScanner.c and testScanner.h or in the scanner file
+main.c processing the arguments (as in P0) then calling testScanner() function with interface and preparation as needed.
+
+#### HOW TO RUN
+1. In your command prompt, type: make
+2. This will generate .o file and executable file
+3. To use the program, type: ./scanner [file] (or the name of your a.out)
+
+**Examples of invocations**
+```
+    ./scanner
+    ./scanner < P1_test1.fs
+    ./scanner P1_test3.fs
+    ./scanner P1_test5
+```
